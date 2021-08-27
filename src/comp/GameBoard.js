@@ -1,22 +1,9 @@
 import React, {useState} from 'react';
 
-export default function GameBoard()
+export default function GameBoard(props)
 {
-	const [btn1, setBtn1] = useState(1);
-	const [btn2, setBtn2] = useState(2);
-	const [btn3, setBtn3] = useState(3);
-	const [btn4, setBtn4] = useState(4);
-	const [btn5, setBtn5] = useState(5);
-	const [btn6, setBtn6] = useState(6);
-	const [btn7, setBtn7] = useState(7);
-	const [btn8, setBtn8] = useState(8);
-
-	const style =
-	{
-		display: 'flex',
-		width: '35rem',
-		flexWrap: 'wrap',
-	};
+	const [btn, setBtn] = useState('');
+	const [lock, setLock] = useState(false);
 
 	const btnStyle =
 	{
@@ -28,28 +15,28 @@ export default function GameBoard()
 		color: 'white',
 	};
 
-	function board()
+	function jogador()
 	{
-		let btn = [];
-
-		for(let i = 1; i < 10; i++)
+		if(!lock)
 		{
-			btn.push(
-				<button
-					style={btnStyle}
-					onClick={() => `${setBtn1('teste')}`}
-				>
-					`${btn}`
-				</button>
-			);
-		}
+			( props.vez ) ? setBtn('O') : setBtn('X');
 
-		return btn;
-	}
+			props.setVez( !props.vez );
+
+			setLock(!lock);
+			
+			props.setTotal( props.total + 1 );
+
+			console.log(props.total);
+		}
+	};
 
 	return(
-		<div style={style}>
-			{board()}
-		</div>
+		<button
+			style={btnStyle}
+			onClick={() => jogador()}
+		>
+			{btn}
+		</button>
 	);
 };
